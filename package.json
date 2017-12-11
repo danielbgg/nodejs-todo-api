@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-todo-api",
+  "version": "1.0.0",
+  "description": "Node.js API to TODO application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kerdlix/nodejs-todo-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kerdlix/nodejs-todo-api/issues"
+  },
+  "homepage": "https://github.com/kerdlix/nodejs-todo-api#readme",
+  "dependencies": {
+    "mongodb": "^2.2.5"
+  }
+}

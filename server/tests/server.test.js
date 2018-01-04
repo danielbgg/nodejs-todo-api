@@ -97,7 +97,7 @@ describe('POST /todos', () => {
         .get('/todos/123')
         .expect(404)
         .end(done);
-    })
+    });
 
   });
 

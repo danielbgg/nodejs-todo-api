@@ -39,18 +39,18 @@ app.get('/todos', (req, res) => {
 app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
-    console.log('Id is not valid', id);
+    //console.log('Id is not valid', id);
     return res.status(404).send();
   }
   Todo.findById(id).then((todo) => {
     if (!todo) {
-      console.log('Todo not found', id);
+      //console.log('Todo not found', id);
       return res.status(404).send();
     }
-    console.log('Todo By Id', todo);
+    //console.log('Todo By Id', todo);
     res.status(200).send({todo});
   }).catch((e) => {
-    console.log('Error fetching todo by id', e);
+    //console.log('Error fetching todo by id', e);
     res.status(400).send();
   });
 });
@@ -58,18 +58,18 @@ app.get('/todos/:id', (req, res) => {
 app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
-    console.log('Id is not valid', id);
+    //console.log('Id is not valid', id);
     return res.status(404).send();
   }
   Todo.findByIdAndRemove(id).then((todo) => {
     if (!todo) {
-      console.log('Todo not found', id);
+      //console.log('Todo not found', id);
       return res.status(404).send();
     }
-    console.log('Todo removed By Id', todo);
+    //console.log('Todo removed By Id', todo);
     res.status(200).send({todo});
   }).catch((e) => {
-    console.log('Error removing todo by id', e);
+    //console.log('Error removing todo by id', e);
     res.status(400).send();
   });
 });
@@ -79,7 +79,7 @@ app.patch('/todos/:id', (req, res) => {
   var body = _.pick(req.body, ['text', 'completed']);
 
   if (!ObjectID.isValid(id)) {
-    console.log('Id is not valid', id);
+    //console.log('Id is not valid', id);
     return res.status(404).send();
   }
 

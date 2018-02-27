@@ -39,50 +39,47 @@ app.get('/todos', authenticate, (req, res) => {
   })
 });
 
-app.get('/todos/:id', (req, res) => {
+app.get('/todos/:id', authenticate, (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
-    //console.log('Id is not valid', id);
     return res.status(404).send();
   }
-  Todo.findById(id).then((todo) => {
+  Todo.findOne({
+    _id: id,
+    _creator: req.user._id
+  }).then((todo) => {
     if (!todo) {
-      //console.log('Todo not found', id);
       return res.status(404).send();
     }
-    //console.log('Todo By Id', todo);
     res.status(200).send({todo});
   }).catch((e) => {
-    //console.log('Error fetching todo by id', e);
     res.status(400).send();
   });
 });
 
-app.delete('/todos/:id', (req, res) => {
+app.delete('/todos/:id', authenticate, (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
-    //console.log('Id is not valid', id);
     return res.status(404).send();
   }
-  Todo.findByIdAndRemove(id).then((todo) => {
+  Todo.findOneAndRemove({
+    _id: id,
+    _creator: req.user._id
+  }).then((todo) => {
     if (!todo) {
-      //console.log('Todo not found', id);
       return res.status(404).send();
     }
-    //console.log('Todo removed By Id', todo);
     res.status(200).send({todo});
   }).catch((e) => {
-    //console.log('Error removing todo by id', e);
     res.status(400).send();
   });
 });
 
-app.patch('/todos/:id', (req, res) => {
+app.patch('/todos/:id', authenticate, (req, res) => {
   var id = req.params.id;
   var body = _.pick(req.body, ['text', 'completed']);
 
   if (!ObjectID.isValid(id)) {
-    //console.log('Id is not valid', id);
     return res.status(404).send();
   }
 
@@ -93,7 +90,10 @@ app.patch('/todos/:id', (req, res) => {
     body.completedAt = null;
   }
 
-  Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
+  Todo.findOneAndUpdate({
+    _id: id,
+    _creator: req.user._id
+  }, {$set: body}, {new: true}).then((todo) => {
     if (!todo) {
       return res.status(404).send();
     }
